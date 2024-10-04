@@ -19,97 +19,113 @@ const pawn = [
         color: "white",
         isTaken: false,
         positionX: 1,
-        positionY: 0
+        positionY: 0,
+        id: document.getElementById('')
     },
     {
         color: "white",
         isTaken: false,
         positionX: 1,
-        positionY: 1
+        positionY: 1,
+        id: document.getElementById('')
     },
     {
         color: "white",
         isTaken: false,
         positionX: 1,
-        positionY: 2
+        positionY: 2,
+        id: document.getElementById('')
     },
     {
         color: "white",
         isTaken: false,
         positionX: 1,
-        positionY: 3
+        positionY: 3,
+        id: document.getElementById('')
     },
     {
         color: "white",
         isTaken: false,
         positionX: 1,
-        positionY: 4
+        positionY: 4,
+        id: document.getElementById('')
     },
     {
         color: "white",
         isTaken: false,
         positionX: 1,
-        positionY: 5
+        positionY: 5,
+        id: document.getElementById('')
     },
     {
         color: "white",
         isTaken: false,
         positionX: 1,
-        positionY: 6
+        positionY: 6,
+        id: document.getElementById('')
     },
     {
         color: "white",
         isTaken: false,
         positionX: 1,
-        positionY: 7
+        positionY: 7,
+        id: document.getElementById('')
     },
     {
         color: "black",
         isTaken: false,
         positionX: 6,
-        positionY: 0
+        positionY: 0,
+        id: document.getElementById('')
     },
     {
         color: "black",
         isTaken: false,
         positionX: 6,
-        positionY: 1
+        positionY: 1,
+        id: document.getElementById('')
     },
     {
         color: "black",
         isTaken: false,
         positionX: 6,
-        positionY: 2
+        positionY: 2,
+        id: document.getElementById('')
     },
     {
         color: "black",
         isTaken: false,
         positionX: 6,
-        positionY: 3
+        positionY: 3,
+        id: document.getElementById('')
     },
     {
         color: "black",
         isTaken: false,
         positionX: 6,
-        positionY: 4
+        positionY: 4,
+        id: document.getElementById('')
     },
     {
         color: "black",
         isTaken: false,
         positionX: 6,
-        positionY: 5
+        positionY: 5,
+        id: document.getElementById('')
     },
     {
         color: "black",
         isTaken: false,
         positionX: 6,
-        positionY: 6
+        positionY: 6,
+        id: document.getElementById('')
     },
     {
         color: "black",
         isTaken: false,
         positionX: 6,
-        positionY: 7
+        positionY: 7,
+        id: document.getElementById('')
     },
 ]
 
@@ -118,25 +134,29 @@ const rook = [
         color: "white",
         isTaken: false,
         positionX: 0,
-        positionY: 0
+        positionY: 0,
+        id: document.getElementById('')
     },
     {
         color: "white",
         isTaken: false,
         positionX: 0,
-        positionY: 7
+        positionY: 7,
+        id: document.getElementById('')
     },
     {
         color: "black",
         isTaken: false,
         positionX: 7,
-        positionY: 0
+        positionY: 0,
+        id: document.getElementById('')
     },
     {
         color: "black",
         isTaken: false,
         positionX: 7,
-        positionY: 7
+        positionY: 7,
+        id: document.getElementById('')
     },
 ]
 
@@ -145,25 +165,29 @@ const knight = [
         color: "white",
         isTaken: false,
         positionX: 0,
-        positionY: 1
+        positionY: 1,
+        id: document.getElementById('')
     },
     {
         color: "white",
         isTaken: false,
         positionX: 0,
-        positionY: 6
+        positionY: 6,
+        id: document.getElementById('')
     },
     {
         color: "black",
         isTaken: false,
         positionX: 7,
-        positionY: 1
+        positionY: 1,
+        id: document.getElementById('')
     },
     {
         color: "black",
         isTaken: false,
         positionX: 7,
-        positionY: 6
+        positionY: 6,
+        id: document.getElementById('')
     },
 ]
 
@@ -172,25 +196,29 @@ const bishop = [
         color: "white",
         isTaken: false,
         positionX: 0,
-        positionY: 2
+        positionY: 2,
+        id: document.getElementById('')
     },
     {
         color: "white",
         isTaken: false,
         positionX: 0,
-        positionY: 5
+        positionY: 5,
+        id: document.getElementById('')
     },
     {
         color: "black",
         isTaken: false,
         positionX: 7,
-        positionY: 2
+        positionY: 2,
+        id: document.getElementById('')
     },
     {
         color: "black",
         isTaken: false,
         positionX: 7,
-        positionY: 5
+        positionY: 5,
+        id: document.getElementById('')
     },
 ]
 
@@ -199,13 +227,15 @@ const queen = [
         color: "white",
         isTaken: false,
         positionX: 0,
-        positionY: 3
+        positionY: 3,
+        id: document.getElementById('')
     },
     {
         color: "black",
         isTaken: false,
         positionX: 7,
-        positionY: 3
+        positionY: 3,
+        id: document.getElementById('')
     },
 ]
 
@@ -214,13 +244,15 @@ const king = [
         color: "white",
         isTaken: false,
         positionX: 0,
-        positionY: 4
+        positionY: 4,
+        id: document.getElementById('')
     },
     {
         color: "black",
         isTaken: false,
         positionX: 7,
-        positionY: 4
+        positionY: 4,
+        id: document.getElementById('')
     },
 ]
 
