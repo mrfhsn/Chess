@@ -11,6 +11,7 @@ for(let i = 1; i <= 8; i++) {
     }
 }
 
+
 // Piece's Objects
 
 const pawn = [
@@ -222,6 +223,7 @@ const king = [
         positionY: 4
     },
 ]
+
 
 // pieces init
 
