@@ -81,6 +81,42 @@ pieces.push({image: 'src/assets/images/queen_w.png', x: 3, y: 0})
 // white king
 pieces.push({image: 'src/assets/images/king_w.png', x: 4, y: 0})
 
+let activeElement = null;
+// const [activeElement, setActiveElement] = useState(null);
+
+function clickPiece(e){
+  const element = e.target;
+  if(element.classList.contains('chess-piece')){
+    // setActiveElement(element);
+    //   element.style.position = 'absolute';
+    //   element.style.zIndex = 1000;
+
+    const x = e.clientX-50;
+    const y = e.clientY-50;
+    element.style.position = "absolute";
+    element.style.left = `${x}px`;
+    element.style.top = `${y}px`;
+
+    activeElement = element
+  }
+}
+
+function movePiece(e){
+  if(activeElement){
+    const x = e.clientX - 50;
+    const y = e.clientY - 50;
+    activeElement.style.position = "absolute";
+    activeElement.style.left = `${x}px`;
+    activeElement.style.top = `${y}px`;
+  }
+}
+
+function dropPiece(e){
+  if(activeElement){
+    activeElement = null;
+  }
+}
+
 const Chessboard = () => {
     let board = [];
 
@@ -95,11 +131,11 @@ const Chessboard = () => {
               }
             });
             
-            board.push(<Tile key={`${i}-${j}`} number={number} image={image}></Tile>);
+            board.push(<Tile key={`${j},${i}`} number={number} image={image}></Tile>);
         }
     }
   return (
-    <div id='chessboard'>
+    <div onMouseMove={e => movePiece(e)} onMouseDown={e => clickPiece(e)} onMouseUp={e => dropPiece(e)} id='chessboard'>
         {board}
     </div>
   )
