@@ -1,8 +1,32 @@
-#chessboard{
+/* #chessboard{
     display: grid;
     grid-template-columns: repeat(8, 100px);
     grid-template-rows: repeat(8, 100px);
-    width: 800px;
-    height: 800px;
+    max-width: 800px;
+    max-height: 800px;
     background-color: #4d4bdb;
+} */
+
+#chessboard {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    width: 80vw;
+    max-width: 90vh;
+    max-height: 90vh;
+    background-color: #4d4bdb;
+    margin: auto;
+    justify-content: center;
 }
+
+/* @media (max-width: 480px){
+    #chessboard {
+        max-width: 100vw;
+    }
+} */
+
+/* @media (max-width: 768px){
+    #chessboard {
+        width: 90vw;
+    }
+} */

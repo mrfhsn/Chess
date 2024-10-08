@@ -1,8 +1,8 @@
-.tile{
+/* .tile{
     display: grid;
     place-content: center;
-    height: 100px;
-    width: 100px;
+    max-height: 6.5rem;
+    max-width: 6.5rem;
 }
 
 .tile .chess-piece{
@@ -31,4 +31,74 @@
 
 .tile img{
     width: 80px;
+} */
+
+.tile {
+    display: grid;
+    place-content: center;
+    max-height: 12vw;
+    max-width: 12vw;
+}
+
+.tile .chess-piece {
+    width: 80px;
+    height: 80px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70%;
+}
+
+.tile .chess-piece:hover {
+    cursor: grab;
+}
+
+.tile .chess-piece:active {
+    cursor: grabbing;
+}
+
+.white-tile {
+    background-color: #fafcf8;
+}
+
+.green-tile {
+    background-color: #7ab93c;
+}
+
+.tile img {
+    width: 70%;
+}
+
+@media (max-width: 768px) {
+    .tile {
+        max-height: 60px;
+        max-width: 60px;
+    }
+
+    .tile .chess-piece {
+        max-width: 60px;
+        max-height: 60px;
+        background-size: 70%;
+    }
+    .tile img {
+        width: 60%;
+    }
+
+
+}
+
+/* Optional: Additional styling for extra small devices */
+@media (max-width: 480px) {
+    .tile {
+        max-height: 40px;
+        max-width: 40px;
+    }
+
+    .tile .chess-piece {
+        width: 50px;
+        height: 50px;
+        /* background-size: 60%; */
+    }
+    .tile img {
+        width: 70%;
+    }
 }
