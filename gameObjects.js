@@ -544,23 +544,68 @@ function checkForQueen(piece) {
 
 function checkForPawn(piece) {
     
+    let probPosToMove, probPosToTake
+    let initX = piece.posX, initY = piece.posY
+    
+    // Checking for white
+    
     if(piece.color) {
-
+        
         if(piece.isFirstMove) {
 
+            if(initX + 1 < 8) {
+                
+                probPosToMove.push(board[initX + 1][initY])
+
+                if(initY + 1 < 8) probPosToTake.push(board[initX + 1][initY + 1])
+                if(initY - 1 >= 0) probPosToTake.push(board[initX + 1][initY - 1])
+            }
+            if(initX + 2 < 8) probPosToMove.push(board[initX + 2][initY])
         }
         else {
 
+            if(initX + 1 < 8) {
+                
+                probPosToMove.push(board[initX + 1][initY])
+
+                if(initY + 1 < 8) probPosToTake.push(board[initX + 1][initY + 1])
+                if(initY - 1 >= 0) probPosToTake.push(board[initX + 1][initY - 1])
+            }
         }
     }
     else {
         if(piece.isFirstMove) {
 
+            if(initX - 1 >= 0) {
+
+                probPosToMove.push(board[initX - 1][initY])
+
+                if(initY + 1 < 8) probPosToTake.push(board[initX - 1][initY + 1])
+                if(initY - 1 >= 0) probPosToTake.push(board[initX - 1][initY - 1])
+            }
+            if(initX - 2 >= 0) probPosToMove.push(board[initX - 2][initY])
         }
         else {
             
+            if(initX - 1 >= 0) {
+
+                probPosToMove.push(board[initX - 1][initY])
+
+                if(initY + 1 < 8) probPosToTake.push(board[initX - 1][initY + 1])
+                if(initY - 1 >= 0) probPosToTake.push(board[initX - 1][initY - 1])
+            }
         }
     }
+
+    probPosToMove.forEach(pos => {
+
+        if(pos === 0) eligible.push(pos)
+    })
+
+    probPosToTake.forEach(pos => {
+
+        if(pos.name !== "king" && pos.color !== piece.color) eligible.push(pos)
+    })
 }
 
 console.log(board)
