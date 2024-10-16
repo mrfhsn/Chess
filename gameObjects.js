@@ -1,7 +1,9 @@
 // Board's 1X1 boxes' objects
 
 const board = new Array(8).fill(0).map(() => new Array(8).fill(0))
-let eligible
+let eligible = []
+let isChecked = false
+let checkedPiece = {}
 
 // for(let i = 1; i <= 8; i++) {
 //     for(let j = 1; j <= 8; j++) {
@@ -357,6 +359,7 @@ king.forEach(piece => {
 
 function checkForRook(piece) {
     
+    let eligible = []
     let probPos
     
     // Searching towards up
@@ -405,6 +408,7 @@ function checkForRook(piece) {
 
 function checkForKnight(piece) {
 
+    let eligible = []
     let probPos
     
     if(piece.posX + 2 < 8 && piece.posY + 1 < 8) probPos.push(board[piece.posX + 2][piece.posY + 1])
@@ -433,6 +437,7 @@ function checkForKnight(piece) {
 
 function checkForBishop(piece) {
 
+    let eligible = []
     let probPos
     
     for(let i = piece.posX, j = piece.posY; i < 8 && j < 8; i++, j++) {
@@ -472,6 +477,7 @@ function checkForBishop(piece) {
 
 function checkForQueen(piece) {
     
+    let eligible = []
     let probPos
 
     // Rook search
@@ -544,6 +550,7 @@ function checkForQueen(piece) {
 
 function checkForPawn(piece) {
     
+    let eligible = []
     let probPosToMove, probPosToTake
     let initX = piece.posX, initY = piece.posY
     
@@ -606,6 +613,8 @@ function checkForPawn(piece) {
 
         if(pos.name !== "king" && pos.color !== piece.color) eligible.push(pos)
     })
+
+    isChecked = true
 }
 
 console.log(board)
