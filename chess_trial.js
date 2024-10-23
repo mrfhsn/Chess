@@ -7,7 +7,17 @@ let checkedPiece = {}
 
 // Board
 
-const board = new Array(8).fill(0).map(() => new Array(8).fill(0))
+const board = []
+for(let i = 0; i < 8; i++) {
+    board[i] = []
+    for(let j = 0; j < 8; j++) {
+        board[i][j] = {
+            x: i,
+            y: j,
+        }
+    }
+}
+
 // const boardGrid = document.getElementById(`board`)
 
 
@@ -17,22 +27,20 @@ const board = new Array(8).fill(0).map(() => new Array(8).fill(0))
 //     const row = Number(clickedCell.getAttribute(`row`))
 //     const col = Number(clickedCell.getAttribute(`col`))
 
-//     if(board[row][col] === 0 && isChecked) { move(checkedPiece, row, col) }
+//     if(!board[row][col].name && isChecked) { move(checkedPiece, row, col) }
 //     else {
-//         const tempPiece = {}
-//         tempPiece = board[row][col]
 
-//         if(tempPiece.name === "pawn") { checkForPawn(tempPiece) }
+//         if(tempPiece.name === "pawn") { checkForPawn(board[row][col]) }
 
-//         else if(tempPiece.name === "rook") { checkForRook(tempPiece) }
+//         else if(board[row][col].name === "rook") { checkForRook(board[row][col]) }
 
-//         else if(tempPiece.name === "knight") { checkForKnight(tempPiece) }
+//         else if(board[row][col].name === "knight") { checkForKnight(board[row][col]) }
 
-//         else if(tempPiece.name === "bishop") { checkForBishop(tempPiece) }
+//         else if(board[row][col].name === "bishop") { checkForBishop(board[row][col]) }
 
-//         else if(tempPiece.name === "queen") { checkForQueen(tempPiece) }
+//         else if(board[row][col].name === "queen") { checkForQueen(board[row][col]) }
 
-//         else { checkForKing(tempPiece) }
+//         else { checkForKing(board[row][col]) }
 //     }
 // })
 
@@ -196,7 +204,7 @@ const rook = [
         // posX: 7,
         // posY: 0,
         posX: 5,
-        posY: 5,
+        posY: 4,
         isFirstMove: true,        
     },
     {
@@ -215,7 +223,7 @@ const knight = [
         color: 1,
         isTaken: false,
         posX: 0,
-        posY: 1,        
+        posY: 1,
     },
     {
         name: "knight",
@@ -246,7 +254,7 @@ const bishop = [
         color: 1,
         isTaken: false,
         posX: 0,
-        posY: 2,        
+        posY: 2,    
     },
     {
         name: "bishop",
@@ -334,7 +342,8 @@ king.forEach(piece => {
     board[piece.posX][piece.posY] = piece
 })
 
-
+defaulter(7, 0)
+defaulter(1, 4)
 
 // Checker functions
 
@@ -352,7 +361,7 @@ function checkForRook(piece) {
             
             probPos.push(board[i][j])
     
-            if(board[i][j] !== 0) { break }
+            if(board[i][j].name) { break }
         }
         
         // Searching towards down
@@ -360,8 +369,8 @@ function checkForRook(piece) {
         for(let i = piece.posX - 1, j = piece.posY; i >= 0; i--) {
             
             probPos.push(board[i][j])
-    
-            if(board[i][j] !== 0) { break }
+            
+            if(board[i][j].name) { break }
         }
         
         // Searching towards right
@@ -370,7 +379,7 @@ function checkForRook(piece) {
             
             probPos.push(board[i][j])
     
-            if(board[i][j] !== 0) { break }
+            if(board[i][j].name) { break }
         }
         
         // Searching towards left
@@ -379,15 +388,14 @@ function checkForRook(piece) {
             
             probPos.push(board[i][j])
     
-            if(board[i][j] !== 0) { break }
+            if(board[i][j].name) { break }
         }
-        // console.log(probPos)
         
         probPos.forEach(pos => {
-    
-            if(pos.name !== "king" && pos.color !== piece.color) { eligible.push(pos) }
+            if(!pos.name) { eligible.push(board[pos.x][pos.y])}
+            else if(pos.name !== "king" && pos.color !== piece.color) { eligible.push(board[pos.posX][pos.posY]) }
         })
-    
+
         isChecked = true
         checkedPiece = piece
     }
@@ -417,8 +425,8 @@ function checkForKnight(piece) {
         if(piece.posX - 1 >= 0 && piece.posY - 2 >= 0) probPos.push(board[piece.posX - 1][piece.posY - 2])
     
         probPos.forEach(pos => {
-    
-            if(pos.name !== "king" && pos.color !== piece.color) { eligible.push(pos) }
+            if(!pos.name) { eligible.push(board[pos.x][pos.y]) }
+            else if(pos.name !== "king" && pos.color !== piece.color) { eligible.push(board[pos.posX][pos.posY]) }
         })
     
         isChecked = true
@@ -437,32 +445,33 @@ function checkForBishop(piece) {
             
             probPos.push(board[i][j])
     
-            if(board[i][j] !== 0) break
+            if(board[i][j].name) break
         }
     
         for(let i = piece.posX - 1, j = piece.posY - 1; i >= 0 && j >= 0; i--, j--) {
             
             probPos.push(board[i][j])
     
-            if(board[i][j] !== 0) break
+            if(board[i][j].name) break
         }
     
         for(let i = piece.posX + 1, j = piece.posY - 1; i < 8 && j >= 0; i++, j--) {
             
             probPos.push(board[i][j])
     
-            if(board[i][j] !== 0) break
+            if(board[i][j].name) break
         }
     
         for(let i = piece.posX - 1, j = piece.posY + 1; i >= 0 && j < 8; i--, j++) {
             
             probPos.push(board[i][j])
     
-            if(board[i][j] !== 0) break
+            if(board[i][j].name) break
         }
     
         probPos.forEach(pos => {
-            if(pos.name !== "king" && pos.color !== piece.color) { eligible.push(pos) }
+            if(!pos.name) { eligible.push(board[pos.x][pos.y]) }
+            else if(pos.name !== "king" && pos.color !== piece.color) { eligible.push(board[pos.posX][pos.posY]) }
         })
     
         isChecked = true
@@ -483,28 +492,28 @@ function checkForQueen(piece) {
             
             probPos.push(board[i][j])
     
-            if(board[i][j] !== 0) break
+            if(board[i][j].name) break
         }
         
         for(let i = piece.posX - 1, j = piece.posY; i >= 0; i--) {
             
             probPos.push(board[i][j])
     
-            if(board[i][j] !== 0) break
+            if(board[i][j].name) break
         }
         
         for(let i = piece.posX, j = piece.posY + 1; j < 8; j++) {
             
             probPos.push(board[i][j])
     
-            if(board[i][j] !== 0) break
+            if(board[i][j].name) break
         }
         
         for(let i = piece.posX, j = piece.posY - 1; j >= 0; j--) {
             
             probPos.push(board[i][j])
     
-            if(board[i][j] !== 0) break
+            if(board[i][j].name) break
         }
     
         // Bishop search
@@ -513,33 +522,33 @@ function checkForQueen(piece) {
             
             probPos.push(board[i][j])
     
-            if(board[i][j] !== 0) break
+            if(board[i][j].name) break
         }
     
         for(let i = piece.posX - 1, j = piece.posY - 1; i >= 0 && j >= 0; i--, j--) {
             
             probPos.push(board[i][j])
     
-            if(board[i][j] !== 0) break
+            if(board[i][j].name) break
         }
     
         for(let i = piece.posX + 1, j = piece.posY - 1; i < 8 && j >= 0; i++, j--) {
             
             probPos.push(board[i][j])
     
-            if(board[i][j] !== 0) break
+            if(board[i][j].name) break
         }
     
         for(let i = piece.posX - 1, j = piece.posY + 1; i >= 0 && j < 8; i--, j++) {
             
             probPos.push(board[i][j])
     
-            if(board[i][j] !== 0) break
+            if(board[i][j].name) break
         }
     
         probPos.forEach(pos => {
-            
-            if(pos.name !== "king" && pos.color !== piece.color) { eligible.push(pos) }
+            if(!pos.name) { eligible.push(board[pos.x][pos.y]) }
+            else if(pos.name !== "king" && pos.color !== piece.color) { eligible.push(board[pos.posX][pos.posY]) }
         })
     
         isChecked = true
@@ -550,36 +559,54 @@ function checkForQueen(piece) {
 function checkForKing(piece) {
     eligibleForKing = []
     let probPos = []
+    const init_x = piece.posX, init_y = piece.posY
 
-    if(piece.posY + 1 < 8 && board[piece.posX][piece.posY + 1].color !== piece.color) { probPos.push(board[piece.posX][piece.posY + 1]) }
+    if(init_y + 1 < 8 && board[init_x][init_y + 1].color !== piece.color) { probPos.push(board[init_x][init_y + 1]) }
     
-    if(piece.posY - 1 >= 0 && board[piece.posX][piece.posY - 1].color !== piece.color) { probPos.push(board[piece.posX][piece.posY - 1]) }
+    if(init_y - 1 >= 0 && board[init_x][init_y - 1].color !== piece.color) { probPos.push(board[init_x][init_y - 1]) }
 
-    if(piece.posX + 1 < 8 && board[piece.posX + 1][piece.posY].color !== piece.color) { probPos.push(board[piece.posX + 1][piece.posY]) }
+    if(init_x + 1 < 8 && board[init_x + 1][init_y].color !== piece.color) { probPos.push(board[init_x + 1][init_y]) }
 
-    if(piece.posX - 1 >= 0 && board[piece.posX - 1][piece.posY].color !== piece.color) { probPos.push(board[piece.posX - 1][piece.posY]) }
+    if(init_x - 1 >= 0 && board[init_x - 1][init_y].color !== piece.color) { probPos.push(board[init_x - 1][init_y]) }
 
-    if(piece.posX + 1 < 8 && piece.posY + 1 < 8 && board[piece.posX + 1][piece.posY + 1].color !== piece.color) { probPos.push(board[piece.posX + 1][piece.posY + 1]) }
+    if(init_x + 1 < 8 && init_y + 1 < 8 && board[init_x + 1][init_y + 1].color !== piece.color) { probPos.push(board[init_x + 1][init_y + 1]) }
 
-    if(piece.posX + 1 < 8 && piece.posY - 1 >= 0 && board[piece.posX + 1][piece.posY - 1].color !== piece.color) { probPos.push(board[piece.posX + 1][piece.posY - 1]) }
+    if(init_x + 1 < 8 && init_y - 1 >= 0 && board[init_x + 1][init_y - 1].color !== piece.color) { probPos.push(board[init_x + 1][init_y - 1]) }
 
-    if(piece.posX - 1 >= 0 && piece.posY - 1 >= 0 && board[piece.posX - 1][piece.posY - 1].color !== piece.color) { probPos.push(board[piece.posX - 1][piece.posY - 1]) }
+    if(init_x - 1 >= 0 && init_y - 1 >= 0 && board[init_x - 1][init_y - 1].color !== piece.color) { probPos.push(board[init_x - 1][init_y - 1]) }
 
-    if(piece.posX - 1 >= 0 && piece.posY + 1 < 8 && board[piece.posX - 1][piece.posY + 1].color !== piece.color) { probPos.push(board[piece.posX - 1][piece.posY + 1]) }
+    if(init_x - 1 >= 0 && init_y + 1 < 8 && board[init_x - 1][init_y + 1].color !== piece.color) { probPos.push(board[init_x - 1][init_y + 1]) }
     
     if(probPos.length >= 1) {
-        for(const pos in probPos) {
+
+        probPos.forEach(pos => {
+
             let eligiblePos = true
-            console.log(pos)
-            for(const rookPiece of rook) {
-                if(rookPiece.color !== piece.color && rookPiece.isTaken === false) {
-                    // console.log(`Position: ${rookPiece.posX}, ${rookPiece.posY}\n`)
+            let temp_x, temp_y
+            let temp_piece = {}
+            
+            if(pos.name) { 
+                temp_piece = pos
+                temp_x = pos.posX
+                temp_y - pos.posY
+            }
+            else {
+                temp_x = pos.x
+                temp_y = pos.y
+            }
+            piece.name = "pawn";
+            piece.posX = temp_x
+            piece.posY = temp_y
+            board[temp_x][temp_y] = piece
+            defaulter(init_x, init_y)
+            
+            for(const queenPiece of queen) {
+                if(queenPiece.color !== piece.color && queenPiece.isTaken === false) {
                     eligible = []
-                    checkForRook(rookPiece)
-                    console.log(eligible)
-                    for(const position in eligible) {
-                        if(position === pos) {
-                            console.log(`got a response`)
+                    checkForQueen(queenPiece)
+
+                    for(const position of eligible) {
+                        if(position === board[temp_x][temp_y]) {
                             eligiblePos = false
                             break
                         }
@@ -587,7 +614,7 @@ function checkForKing(piece) {
                 }
                 if(!eligiblePos) { break }
             }
-
+            
             if(eligiblePos) {
                 for(const knightPiece of knight) {
                     if(knightPiece.color !== piece.color && knightPiece.isTaken === false) {
@@ -595,7 +622,7 @@ function checkForKing(piece) {
                         checkForKnight(knightPiece)
 
                         for(const position of eligible) {
-                            if(position === pos) {
+                            if(position === board[temp_x][temp_y]) {
                                 eligiblePos = false
                                 break
                             }
@@ -612,7 +639,7 @@ function checkForKing(piece) {
                         checkForBishop(bishopPiece)
 
                         for(const position of eligible) {
-                            if(position === pos) {
+                            if(position === board[temp_x][temp_y]) {
                                 eligiblePos = false
                                 break
                             }
@@ -623,13 +650,12 @@ function checkForKing(piece) {
             }
 
             if(eligiblePos) {
-                for(const queenPiece of queen) {
-                    if(queenPiece.color !== piece.color && queenPiece.isTaken === false) {
-                        eligible = []
-                        checkForQueen(queenPiece)
-
+                for(const rookPiece of rook) {
+                    if(rookPiece.color !== piece.color && rookPiece.isTaken === false) {
+                        eligible = [];
+                        checkForRook(rookPiece)
                         for(const position of eligible) {
-                            if(position === pos) {
+                            if(position === board[temp_x][temp_y]) {
                                 eligiblePos = false
                                 break
                             }
@@ -644,9 +670,8 @@ function checkForKing(piece) {
                     if(pawnPiece.color !== piece.color && pawnPiece.isTaken === false) {
                         eligible = []
                         checkForPawn(pawnPiece)
-
                         for(const position of eligible) {
-                            if(position === pos) {
+                            if(position === board[temp_x][temp_y]) {
                                 eligiblePos = false
                                 break
                             }
@@ -655,12 +680,22 @@ function checkForKing(piece) {
                     if(!eligiblePos) { break }
                 }
             }
-
-            console.log(eligiblePos)
-            if(eligiblePos) { eligibleForKing.push(pos) }
+            
+            piece.name = "king"
+            piece.posX = init_x
+            piece.posY = init_y
+            board[init_x][init_y] = piece
+            
+            if(temp_piece) { board[temp_x][temp_y] = temp_piece }
+            else { defaulter(temp_x, temp_y) }
+            
+            if(eligiblePos) { eligibleForKing.push(board[temp_x][temp_y]) }
             eligible = []
-        }
+        })
     }
+    
+    isChecked = true
+    checkedPiece = piece
 }
 
 function checkForPawn(piece) {
@@ -701,11 +736,11 @@ function checkForPawn(piece) {
 
         else {
             if(piece.isFirstMove) {
-    
+                
                 if(initX - 1 >= 0) {
     
                     probPosToMove.push(board[initX - 1][initY], board[initX - 2][initY])
-    
+                    
                     if(initY + 1 < 8) probPosToTake.push(board[initX - 1][initY + 1])
                     if(initY - 1 >= 0) probPosToTake.push(board[initX - 1][initY - 1])
                 }
@@ -724,12 +759,12 @@ function checkForPawn(piece) {
     
         probPosToMove.forEach(pos => {
     
-            if(pos === 0) eligible.push(pos)
+            if(!pos.name) eligible.push(board[pos.x][pos.y])
         })
     
         probPosToTake.forEach(pos => {
     
-            if(pos.name !== "king" && pos.color !== piece.color && pos !== 0) { eligible.push(pos) }
+            if(pos.name !== "king" && pos.color !== piece.color && pos.name) { eligible.push(board[pos.posX][pos.posY]) }
         })
     
         isChecked = true
@@ -737,69 +772,116 @@ function checkForPawn(piece) {
     }
 }
 
+
 // Take and Move Functions
 
 function take(taking, toBeTaken) {
-    let matched = false
-
-    for(const position of eligible) {
-        if(position === board[toBeTaken.posX][toBeTaken.posY]) {
-            matched = true
-            break
+    
+    if(taking.name === "king") {
+        for(const position of eligibleForKing) {
+            if(position === board[toBeTaken.posX][toBeTaken.posY]) {
+                
+                let x = toBeTaken.posX, y = toBeTaken.posY;
+                toBeTaken.isTaken = true;
+                board[toBeTaken.posX][toBeTaken.posY] = taking;
+    
+                hide(toBeTaken)
+                defaulter(taking.posX, taking.posY)
+    
+                taking.posX = x;
+                taking.posY = y;
+            
+                isChecked = false
+                taking.isFirstMove = false
+                checkedPiece = {}
+                eligible = []
+                eligibleForKing = []
+                break
+            }
         }
     }
+    else {
+        for(const position of eligible) {
+            if(position === board[toBeTaken.posX][toBeTaken.posY]) {
+                
+                let x = toBeTaken.posX, y = toBeTaken.posY;
+                toBeTaken.isTaken = true;
+                board[toBeTaken.posX][toBeTaken.posY] = taking;
     
-    if(matched) {
-        taking.posX = toBeTaken.posX
-        taking.posY = toBeTaken.posY
-        toBeTaken.isTaken = true
-        board[taking.posX][taking.posY] = taking
+                hide(toBeTaken)
+                defaulter(taking.posX, taking.posY)
     
-        isChecked = false
-        isFirstMove = false
-        checkedPiece = {}
-        eligible = []
-        eligibleForKing = []
+                taking.posX = x;
+                taking.posY = y;
+            
+                isChecked = false
+                taking.isFirstMove = false
+                checkedPiece = {}
+                eligible = []
+                eligibleForKing = []
+                break
+            }
+        }
     }
 }
 
 function move(moving, x, y) {
-    let matched = false
-
-    for(const position of eligible) {
-        if(position === board[moving.posX][moving.posY]) {
-            console.log(`got`)
-            matched = true
-            break
+    if(moving.name === "king") {
+        for(const position of eligibleForKing) {
+            if(position === board[x][y]) {
+    
+                board[x][y] = moving;
+                defaulter(moving.posX, moving.posY);
+                moving.posX = x
+                moving.posY = y
+            
+                isChecked = false
+                moving.isFirstMove = false
+                checkedPiece = {}
+                eligibleForKing = []
+                break
+            }
         }
     }
-
-    if(matched) {
-        board[x][y] = moving
-        board[moving.posX][moving.posY] = 0
-        moving.posX = x
-        moving.posY = y
+    else {
+        for(const position of eligible) {
+            if(position === board[x][y]) {
     
-        isChecked = false
-        isFirstMove = false
-        checkedPiece = {}
-        eligible = []
-        eligibleForKing = []
+                board[x][y] = moving;
+                defaulter(moving.posX, moving.posY);
+                moving.posX = x
+                moving.posY = y
+            
+                isChecked = false
+                moving.isFirstMove = false
+                checkedPiece = {}
+                eligible = []
+                break
+            }
+        }
     }
 }
 
-function castle(king, rook) {
-    if(rook.isFirstMove) {
-        let x = king.posX, y = king.posY
+function castle(kingPiece, rookPiece) {
+    
+    if(rookPiece.isFirstMove) {
+        let x = kingPiece.posX, y = kingPiece.posY
     
         // For short side castle
         
-        if(y < rook.posY) {
-            if(board[x][y + 1] === 0 && board[x][y + 2] === 0) {
-                king.posY += 2
-                rook.posY = king.posY - 1
-                king.isFirstMove = false
-                rook.isFirstMove = false
+        if(y < rookPiece.posY) {
+            if(!board[x][y + 1].name && !board[x][y + 2].name) {
+                
+                board[x][y + 2] = kingPiece;
+                defaulter(x, y)
+                kingPiece.posX = x, kingPiece.posY = y + 2;
+
+                board[x][y + 1] = rookPiece;
+                defaulter(rookPiece.posX, rookPiece.posY)
+                rookPiece.posX = x, rookPiece.posY = y + 1;
+
+                kingPiece.isFirstMove = false
+                rookPiece.isFirstMove = false
                 eligibleForKing = []
             }
         }
@@ -807,23 +889,36 @@ function castle(king, rook) {
         // For long side castle
 
         else {
-            if(board[x][y - 1] === 0 && board[x][y - 2] === 0 && board[x][y - 3] === 0) {
-                king.posY -= 2
-                rook.posY = king.posY + 1
-                king.isFirstMove = false
-                rook.isFirstMove = false
+            if(!board[x][y - 1].name && !board[x][y - 2].name && !board[x][y - 3].name) {
+                
+                board[x][y - 2] = kingPiece;
+                defaulter(x, y)
+                kingPiece.posX = x, kingPiece.posY = y - 2;
+
+                board[x][y - 1] = rookPiece;
+                defaulter(rookPiece.posX, rookPiece.posY)
+                rookPiece.posX = x, rookPiece.posY = y - 1;
+
+                kingPiece.isFirstMove = false
+                rookPiece.isFirstMove = false
                 eligibleForKing = []
             }
         }
     }
 }
 
-// checkForKing(king[0])
-// console.log(eligibleForKing)
+
+// Update functions
+
+function defaulter(h, v) {
+    board[h][v] = { x: h, y: v };
+}
+
+function hide(takenPiece) {
+    // make the display = none for the piece and can be shown elsewhere through an array or something
+}
+
 // console.log(board)
-checkForRook(rook[2])
-console.log(eligible)
-move(rook[2], 3, 5)
-// console.log(board[5][5])
-// console.log(`\n\n${board[3][5]}\n\n`)
-// console.log(rook[2])
+
+checkForKing(board[0][4])
+console.log(eligibleForKing)
