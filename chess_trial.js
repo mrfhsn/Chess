@@ -907,6 +907,7 @@ function take(taking, toBeTaken) {
             
                 isChecked = false
                 taking.isFirstMove = false
+                taking.checked = false;
                 checkedPiece = {}
                 eligible = []
                 eligibleForKing = []
@@ -957,6 +958,7 @@ function move(moving, x, y) {
             
                 isChecked = false
                 moving.isFirstMove = false
+                taking.checked = false;
                 checkedPiece = {}
                 eligibleForKing = []
                 update()
@@ -1008,6 +1010,7 @@ function castle(kingPiece, rookPiece) {
 
                 kingPiece.isFirstMove = false
                 rookPiece.isFirstMove = false
+                taking.checked = false;
                 eligibleForKing = []
                 update()
                 isKingChecked()
@@ -1030,6 +1033,7 @@ function castle(kingPiece, rookPiece) {
 
                 kingPiece.isFirstMove = false
                 rookPiece.isFirstMove = false
+                taking.checked = false;
                 eligibleForKing = []
                 update()
                 isKingChecked()
