@@ -343,7 +343,7 @@ king.forEach(piece => {
 
 function checkForRook(piece) {
     if(isChecked && checkedPiece.color !== piece.color) { take(board[checkedPiece.posX][checkedPiece.posY], board[piece.posX][piece.posY]) }
-    else if(checkedPiece.name === "king" && checkedPiece.color === piece.color) { castle(checkedPiece, piece) }
+    else if(checkedPiece.name === "king" && checkedPiece.color === piece.color && checkedPiece.isFirstMove) { castle(checkedPiece, piece) }
     else {
         eligible = []
         checkedPiece = {}
@@ -958,7 +958,7 @@ function move(moving, x, y) {
             
                 isChecked = false
                 moving.isFirstMove = false
-                taking.checked = false;
+                moving.checked = false;
                 checkedPiece = {}
                 eligibleForKing = []
                 update()
@@ -993,7 +993,7 @@ function move(moving, x, y) {
 function castle(kingPiece, rookPiece) {
     
     if(rookPiece.isFirstMove) {
-        let x = kingPiece.posX, y = kingPiece.posY
+        let x = kingPiece.posX, y = kingPiece.posY;
     
         // For short side castle
         
@@ -1002,19 +1002,31 @@ function castle(kingPiece, rookPiece) {
                 
                 board[x][y + 2] = kingPiece;
                 defaulter(x, y)
-                kingPiece.posX = x, kingPiece.posY = y + 2;
+                kingPiece.posY = y + 2;
 
-                board[x][y + 1] = rookPiece;
-                defaulter(rookPiece.posX, rookPiece.posY)
-                rookPiece.posX = x, rookPiece.posY = y + 1;
+                isKingChecked();
 
-                kingPiece.isFirstMove = false
-                rookPiece.isFirstMove = false
-                taking.checked = false;
-                eligibleForKing = []
-                update()
-                isKingChecked()
-                win_check()
+                if(!board[x][y + 2].checked) {
+
+                    board[x][y + 1] = rookPiece;
+                    defaulter(rookPiece.posX, rookPiece.posY)
+                    rookPiece.posY = y + 1;
+
+                    kingPiece.isFirstMove = false
+                    rookPiece.isFirstMove = false
+                    kingPiece.checked = false;
+                    eligibleForKing = []
+                    update()
+                    // isKingChecked()
+                    win_check()
+                }
+                else {
+                    board[x][y] = kingPiece;
+                    defaulter(x, y + 2)
+                    kingPiece.posY = y;
+                }
+
+                
             }
         }
 
@@ -1025,19 +1037,29 @@ function castle(kingPiece, rookPiece) {
                 
                 board[x][y - 2] = kingPiece;
                 defaulter(x, y)
-                kingPiece.posX = x, kingPiece.posY = y - 2;
+                kingPiece.posY = y - 2;
 
-                board[x][y - 1] = rookPiece;
-                defaulter(rookPiece.posX, rookPiece.posY)
-                rookPiece.posX = x, rookPiece.posY = y - 1;
+                isKingChecked();
 
-                kingPiece.isFirstMove = false
-                rookPiece.isFirstMove = false
-                taking.checked = false;
-                eligibleForKing = []
-                update()
-                isKingChecked()
-                win_check()
+                if(!board[x][y - 2].checked) {
+                    
+                    board[x][y - 1] = rookPiece;
+                    defaulter(rookPiece.posX, rookPiece.posY)
+                    rookPiece.posY = y - 1;
+    
+                    kingPiece.isFirstMove = false
+                    rookPiece.isFirstMove = false
+                    kingPiece.checked = false;
+                    eligibleForKing = []
+                    update()
+                    // isKingChecked()
+                    win_check()
+                }
+                else {
+                    board[x][y] = kingPiece;
+                    defaulter(x, y - 2)
+                    kingPiece.posY = y;
+                }
             }
         }
     }
