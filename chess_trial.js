@@ -774,7 +774,7 @@ function isKingChecked() {
         const king_x = kingPiece.posX, king_y = kingPiece.posY;
 
         for(const queenPiece of queen) {
-            if(queenPiece.color !== piece.color && queenPiece.isTaken === false) {
+            if(queenPiece.color !== kingPiece.color && queenPiece.isTaken === false) {
                 eligible = []
                 checkForQueen(queenPiece)
 
@@ -791,7 +791,7 @@ function isKingChecked() {
 
         if(is_safe) {
             for(const knightPiece of knight) {
-                if(knightPiece.color !== piece.color && knightPiece.isTaken === false) {
+                if(knightPiece.color !== kingPiece.color && knightPiece.isTaken === false) {
                     eligible = []
                     checkForKnight(knightPiece)
 
@@ -809,7 +809,7 @@ function isKingChecked() {
 
         if(is_safe) {
             for(const bishopPiece of bishop) {
-                if(bishopPiece.color !== piece.color && bishopPiece.isTaken === false) {
+                if(bishopPiece.color !== kingPiece.color && bishopPiece.isTaken === false) {
                     eligible = []
                     checkForBishop(bishopPiece)
 
@@ -827,7 +827,7 @@ function isKingChecked() {
 
         if(is_safe) {
             for(const rookPiece of rook) {
-                if(rookPiece.color !== piece.color && rookPiece.isTaken === false) {
+                if(rookPiece.color !== kingPiece.color && rookPiece.isTaken === false) {
                     eligible = [];
                     checkForRook(rookPiece)
 
@@ -845,7 +845,7 @@ function isKingChecked() {
 
         if(is_safe) {
             for(const pawnPiece of pawn) {
-                if(pawnPiece.color !== piece.color && pawnPiece.isTaken === false) {
+                if(pawnPiece.color !== kingPiece.color && pawnPiece.isTaken === false) {
                     eligible = []
                     checkForPawn(pawnPiece)
 
@@ -881,7 +881,7 @@ function win_check() {
                 else { console.log(`white won`); }
             }
         }
-    })
+    });
 
     eligibleForKing = [];
 }
@@ -1108,4 +1108,4 @@ function update() {
     })
 }
 
-// console.log(board)
+// console.log(board);
